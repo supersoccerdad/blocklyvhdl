@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BlocklyVHDL Playground</title>
+<script src="../appengine/storage.js"></script>
+<script src="../blockly_compressed.js"></script>
+<script src="../blocks_compressed.js"></script>
+<script src="../vhdl_compressed.js"></script>
+<script src="../msg/js/en.js"></script>
+
+<script>
+'use strict';
+// Depending on the URL argument, render as LTR or RTL.
+var rtl = (document.location.search == '?rtl');
+var workspace = null;
+
+function start() {
+  var toolbox = document.getElementById('toolbox');
+  workspace = Blockly.inject('blocklyDiv',
+          {comments: true,
+           disable: true,
+           collapse: true,
+           maxBlocks: Infinity,
+           media: '../media/',
+           readOnly: false,
+           rtl: rtl,
+           scrollbars: true,
+           toolbox: toolbox,
+           zoom:
+             {controls: true,
+              wheel: true,
+              startScale: 1.0,
+              maxScale: 4,
+              minScale: .25,
+              scaleSpeed: 1.1}
+          });
+  window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+  BlocklyStorage.backupOnUnload();
+  // Restore previously displayed text.
+  if (sessionStorage) {
+    var text = sessionStorage.getItem('textarea');
+    if (text) {
+      document.getElementById('importExport').value = text;
+    }
+    // Restore event logging state.
+    var state = sessionStorage.getItem('logEvents');
+    logEvents(Boolean(Number(state)));
+  } else {
+    // MSIE 11 does not support sessionStorage on file:// URLs.
+    logEvents(false);
+  }
+  taChange();
+}
+
+window.oncontextmenu = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+};
+
+function toXml() {
+  var output = document.getElementById('importExport');
+  var xml = Blockly.Xml.workspaceToDom(workspace);
+  output.value = Blockly.Xml.domToPrettyText(xml);
+  output.focus();
+  output.select();
+  taChange();
+}
+
+function fromXml() {
+  var input = document.getElementById('importExport');
+  var xml = Blockly.Xml.textToDom(input.value);
+  Blockly.Xml.domToWorkspace(xml, workspace);
+  taChange();
+}
+
+function toCode(lang) {
+  var output = document.getElementById('importExport');
+  output.value = Blockly[lang].workspaceToCode(workspace);
+  taChange();
+}
+
+// Disable the "Import from XML" button if the XML is invalid.
+// Preserve text between page reloads.
+function taChange() {
+  var textarea = document.getElementById('importExport');
+  if (sessionStorage) {
+    sessionStorage.setItem('textarea', textarea.value);
+  }
+  var valid = true;
+  try {
+    Blockly.Xml.textToDom(textarea.value);
+  } catch (e) {
+    valid = false;
+  }
+  document.getElementById('import').disabled = !valid;
+}
+
+function logEvents(state) {
+  var checkbox = document.getElementById('logCheck');
+  checkbox.checked = state;
+  if (sessionStorage) {
+    sessionStorage.setItem('logEvents', Number(state));
+  }
+  if (state) {
+    workspace.addChangeListener(logger);
+  } else {
+    workspace.removeChangeListener(logger);
+  }
+}
+
+function logger(e) {
+  console.log(e);
+}
+ 
+function saveTextAsFile()
+{
+  var output = document.getElementById('importExport');
+  var xml = Blockly.Xml.workspaceToDom(workspace);
+//    output.value = Blockly.Xml.domToPrettyText(xml);
+//	alert(output.value);
+var textToSave = output.value;
+//var textToSave = document.getElementById("inputTextToSave").value;
+var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+downloadLink.href = textToSaveAsURL;
+downloadLink.onclick = destroyClickedElement;
+downloadLink.style.display = "none";
+document.body.appendChild(downloadLink);
+downloadLink.click();
+}
+function destroyClickedElement(event)
+{
+document.body.removeChild(event.target);
+}
+function loadFileAsText()
+{
+var fileToLoad = document.getElementById("fileToLoad").files[0];
+var fileReader = new FileReader();
+fileReader.onload = function(fileLoadedEvent)
+{
+  var input = fileLoadedEvent.target.result;
+  var xml = Blockly.Xml.textToDom(input);
+  Blockly.Xml.domToWorkspace(xml, workspace);
+  taChange();
+};
+fileReader.readAsText(fileToLoad, "UTF-8");
+}  
+  
+  
+</script>
+
+<style>
+html, body {
+  height: 100%;
+}
+body {
+  background-color: #fff;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+container {
+  height: 80%;
+  background: #f0e68c;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 140%;
+}
+#blocklyDiv {
+  float: left;
+  height: 95%;
+  width: 65%;
+}
+#importExport {
+  float: right;
+  font-family: monospace;
+}
+
+tr.d0 td {
+  font-size:8pxl;
+}
+tr.d1 td {
+  font-size:8pxl;
+}
+
+</style>
+</head>
+<body onload="start()">
+
+  <div id="blocklyDiv"></div>
+
+  <xml id="toolbox" style="display: none">
+    <category name="Library" colour="290">
+		  <block type="library"></block>
+		  <block type="ieee"></block>
+		  <block type="std_textio"></block>
+		  <block type="use"></block>
+		  <block type="std_logic"></block>
+		  <block type="std_logic_init"></block>	
+		  <block type="vector"></block>
+		  <block type="vector_init"></block>
+		  <block type="integer"></block>
+		  <block type="integer_init"></block>		  
+	</category>
+	<category name="Entity" colour="65">
+		  <block type="entity"></block>
+		  <block type="generic"></block>
+		  <block type="port_pin_name"></block>		  
+	</category>
+    <category name="Architecture" colour="180">
+		  <block type="architecture"></block>
+		  <block type="generate_if"></block>
+		  <block type="port_map"></block>
+		  <block type="lists_positional1"></block> 
+          <block type="lists_named"></block>
+		  <block type="map_list"></block>
+		  <block type="map_association"></block>
+		  <block type="constant2"></block>		  
+	</category>
+	<category name="Package" colour="105">
+		  <block type="package"></block>	
+	</category>	
+	<category name="Configuration" colour="160">
+		  <block type="configuration"></block>
+		  <block type="forconfig"></block>
+		  <block type="for_arch"></block>		  
+	</category>
+	<category name="Function" colour="240">
+		  <block type="function"></block>
+		  <block type="function_call"></block>			  
+	</category>
+    <category name="Declaration" colour="15">
+		  <block type="procedure"></block>
+		  <block type="function_pack"></block>
+		  <block type="component_instantiation"></block>
+		  <block type="component_procedure"></block>		  
+		  <block type="configuration"></block>
+		  <block type="alias"></block>
+		  <block type="signal"></block>
+		  <block type="signal_init"></block>
+		  <block type="variable"></block>
+		  <block type="name_type"></block>
+		  <block type="association"></block>
+		  <block type="association_delay"></block>
+		  <block type="attribute"></block>
+		  <block type="attribute_of"></block>
+		  <block type="type"></block>
+		  <block type="subtype"></block>
+		  <block type="subtype_range"></block>
+		  <block type="type_array"></block>
+		  <block type="array_type_type"></block>
+		  <block type="alias"></block>
+		  <block type="disconnect"></block>
+		  <block type="record"></block>
+		  <block type="proc_pin_name"></block>
+	</category>
+	<category name="Concurrent" colour="90">
+		  <block type="procedure_call"></block>
+		  <block type="process"></block>
+		  <block type="controls_when"></block>
+		  <block type="controls_select"></block>
+		  <block type="generate"></block>		  
+	</category>	
+	<category name="Sequential" colour="195">
+		  <block type="controls_if"></block>
+		  <block type="controls_case"></block>
+		  <block type="for_loop"></block>
+		  <block type="while_loop"></block>
+		  <block type="loop"></block>		
+		  <block type="next"></block>
+		  <block type="next_when"></block>	  
+		  <block type="return"></block>
+		  <block type="exit"></block>			  
+		  <block type="exit_label"></block>
+		  <block type="exit_when"></block>
+		  <block type="wait"></block>		  
+		  <block type="wait_list"></block>
+		  <block type="null"></block>		  
+	</category>
+	<category name="Expression" colour="300">
+		  <block type="name"></block>
+		  <block type="operator"></block>
+		  <block type="qualified"></block>
+		  <block type="not"></block>
+		  <block type="others"></block>
+		  <block type="condition"></block>
+		  <block type="type_conversion"></block>
+		  <block type="conversion"></block>
+		  <block type="std_match"></block>
+		  <block type="range1"></block>
+		  <block type="range2"></block>
+		  <block type="range2_index"></block>
+		  <block type="range_var"></block>
+		  <block type="index"></block>
+		  <block type="range_type"></block>
+		  <block type="all"></block>
+		  <block type="time_association"></block>		  
+	</category>
+	<category name="Testbench" colour="270">
+	      <block type="assert"></block>
+	</category>
+    <category name="File" colour="160">
+		  <block type="file"></block>	
+		  <block type="write"></block>	
+		  <block type="write2"></block>
+		  <block type="writeline"></block>
+		  <block type="read"></block>
+		  <block type="readline"></block>
+	</category>
+	<category name="Modules" colour="260">
+	      <block type="counter"></block>
+	</category>
+  </xml>
+
+  <div class="container">
+
+  <p align="center">
+    <input type="button" value="To VHDL" onclick="toCode('VHDL')">
+    &nbsp;
+    <br>
+    <textarea id="importExport" style="width: 34%" rows="34"
+      onchange="taChange();" onkeyup="taChange()"></textarea>
+  </p>
+  
+  <table align="right" ; width="34%">
+<tr>
+<td><font size="1">Filename to Save As:</font></td>
+<td><font size="1"><input id="inputFileNameToSaveAs"></input></font></td>
+<td><button onclick="saveTextAsFile()"><font size="1">Save to File</font></button></td>
+</tr>
+<tr>
+<td><font size="1">Select a File to Load:</font></td>
+<td><font size="1"><input type="file" id="fileToLoad"></font></td>
+<td><button onclick="loadFileAsText()"><font size="1">Load File</button></font><td>
+</tr>
+</table>
+</div>
+</body>
+</html>

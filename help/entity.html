@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>entity</title>
+
+</head><body style="width: 860px;">
+<span style="font-size: 14pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"></span>
+<table style="text-align: left; width: 840px; height: 185px;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 448px;"><span style="font-size: 14pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"><a name="entity"></a>Entity</span></td>
+<td style="width: 40px;"></td>
+<td style="width: 346px;"></td>
+</tr>
+<tr>
+<td style="width: 448px;"><img style="width: 115px; height: 58px;" alt="entity" src="../help/entity.png" v:shapes="_x0000_i1025"></td>
+<td style="width: 40px;"></td>
+<td style="width: 346px; font-family: Courier; vertical-align: top;">entity
+COUNTER is<br>
+end COUNTER;</td>
+</tr>
+<tr>
+<td style="width: 448px; font-family: Arial;"><small>The
+entity block is a statement input block, it can be filled with
+declarations like generic or input/output ports. The Entity block has
+an autofiller for its name</small></td>
+<td style="width: 40px;"></td>
+<td style="width: 346px;"></td>
+</tr>
+</tbody>
+</table>
+<hr style="width: 100%; height: 2px;">
+<table style="text-align: left; width: 1047px; height: 268px;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 446px; vertical-align: top;"><img style="width: 446px; height: 266px;" alt="entity example" src="entity_example.png" v:shapes="_x0000_i1026" align="top"></td>
+<td style="width: 40px;"></td>
+<td style="font-family: Courier; width: 611px; vertical-align: top;">entity
+COUNTER is<br>
+&nbsp; generic (<br>
+&nbsp;&nbsp;&nbsp; WIDTH
+: in natural := 32);<br>
+&nbsp; port (<br>
+&nbsp;&nbsp;&nbsp; RST
+: in std_logic;<br>
+&nbsp; &nbsp; CLK
+: in std_logic;<br>
+&nbsp;&nbsp;&nbsp; LOAD
+: in std_logic;<br>
+&nbsp;&nbsp;&nbsp; DATA
+: in std_logic_vector(WIDTH-1 downto 0);<br>
+&nbsp;&nbsp;&nbsp; Q
+: out std_logic_vector(WIDTH-1 downto 0));<br>
+end COUNTER;</td>
+</tr>
+</tbody>
+</table>
+<hr style="width: 100%; height: 2px;">
+<table style="text-align: left; width: 839px; height: 258px;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 445px;"><span style="font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"><a name="generic_port"></a>Generic/Port</span></td>
+<td style="width: 41px;"></td>
+<td style="width: 348px;"></td>
+</tr>
+<tr>
+<td style="width: 445px;"><img style="width: 83px; height: 65px;" alt="generic" src="../help/generic.png" v:shapes="_x0000_i1027"><span style="">&nbsp;</span><img style="width: 174px; height: 76px;" alt="generic_selection" src="../help/generic_selection.png" v:shapes="_x0000_i1028"></td>
+<td style="width: 41px;"></td>
+<td style="width: 348px; font-family: Courier New,Courier,monospace;">generic
+(<br>
+);<br>
+port (<br>
+);</td>
+</tr>
+<tr>
+<td style="width: 445px; font-family: Arial;"><font size="-1">The generic/port block is a
+statement input block, it can be filled with declarations. This block
+has an selection menu with the following items to select:<br>
+</font>
+<ul>
+<li><font size="-1">generic&nbsp;</font></li>
+<li><font size="-1">port</font></li>
+</ul>
+</td>
+<td style="width: 41px;"></td>
+<td style="width: 348px;"></td>
+</tr>
+</tbody>
+</table>
+<hr style="width: 100%; height: 2px;">
+<table style="text-align: left; width: 840px; height: 391px;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 446px;"><span style="font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;" lang="EN-US"><a name="input_output"></a>Input/output</span></td>
+<td style="width: 40px;"></td>
+<td style="width: 350px;"></td>
+</tr>
+<tr>
+<td style="width: 446px;"><img style="width: 101px; height: 34px;" alt="input" src="../help/input_output.png" v:shapes="_x0000_i1029"><span style="">&nbsp;</span><img style="width: 167px; height: 118px;" alt="input_selection" src="../help/input_output_selection.png" v:shapes="_x0000_i1030"><span style="">&nbsp;</span></td>
+<td style="width: 40px;"></td>
+<td style="width: 350px;"><span style="font-size: 9pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;; color: black;" lang="EN-US"></span><span style="font-size: 9pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"></span><span style="font-family: Courier New,Courier,monospace;">: in ;</span></td>
+</tr>
+<tr>
+<td style="font-family: Arial;"><font size="-1">
+The input/output block is a
+declaration block that is used in the port statement block, This block
+has an selection menu with the following items to select:
+</font><ul>
+<li><font size="-1">&nbsp;in</font></li>
+<li><font size="-1"> out</font></li>
+<li><font size="-1">&nbsp;inout</font></li>
+<li><font size="-1">&nbsp;buffer</font></li>
+</ul><font size="-1"><span style="font-family: Arial;">This block needs to be filled with two input values, the first is the name, the second is the type.</span></font>
+</td>
+<td style="width: 40px;"></td>
+<td style="width: 350px;"></td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<span style="font-size: 14pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;;"></span>
+</body></html>
