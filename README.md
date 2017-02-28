@@ -10,6 +10,12 @@ must be installed as well, it can be downloaded from here.
 
 **https://github.com/google/closure-library**
 
+The closure-library has to be installed in the same directory as the 
+blocklyvhdl directory:
+
+./blocklyvhdl
+./closure-library
+
 Blocklyvhdl can be started by loading either compressed_index.html or 
 playground_vhdl.html from directory ./demos in the browser.
 
