@@ -25,5 +25,5 @@ the development and upgrading of blocklyvhdl. The compressed_index.html uses
 the compiled version of the source files.
 
 After the files are finished the source files can be compiled with the python file 
-build.py generating the blocks_compressed.js and blockly_compressed.js.
+build.py generating the blocks_compressed.js, blockly_compressed.js and vhdl_compressed.js.
 Make sure you have python installed on your PC.
