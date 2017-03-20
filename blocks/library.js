@@ -54,7 +54,7 @@ Blockly.Blocks['ieee'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("use IEEE.")
-        .appendField(new Blockly.FieldDropdown([["std_logic_1164", "std_logic_1164"], ["std_logic_textio", "std_logic_textio"], ["std_logic_arith", "std_logic_arith"], ["numeric.std", "numeric.std"], ["numeric_bit", "numeric_bit"], ["std_logic_signed", "std_logic_signed"], ["std_logic_unsinged", "std_logic_unsinged"], ["math_real", "math_real"], ["math_complex", "math_complex"]]), "IEEE")
+        .appendField(new Blockly.FieldDropdown([["std_logic_1164", "std_logic_1164"], ["std_logic_textio", "std_logic_textio"], ["std_logic_arith", "std_logic_arith"], ["numeric_std", "numeric_std"], ["numeric_bit", "numeric_bit"], ["std_logic_signed", "std_logic_signed"], ["std_logic_unsinged", "std_logic_unsinged"], ["math_real", "math_real"], ["math_complex", "math_complex"]]), "IEEE")
         .appendField(".all");
     this.setInputsInline(true);
     this.setPreviousStatement(true, "library");

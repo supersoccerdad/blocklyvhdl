@@ -35,7 +35,7 @@ Blockly.VHDL['controls_if'] = function(block) {
     argument = Blockly.VHDL.valueToCode(block, 'IF' + n,
         Blockly.VHDL.ORDER_NONE) || 'false';
     branch = Blockly.VHDL.statementToCode(block, 'DO' + n);
-    code += 'elseif ' + argument + ' then\n' + branch;// + 'end if;';
+    code += 'elsif ' + argument + ' then\n' + branch;// + 'end if;';
   }
   if (block.elseCount_) {
     branch = Blockly.VHDL.statementToCode(block, 'ELSEDO');
