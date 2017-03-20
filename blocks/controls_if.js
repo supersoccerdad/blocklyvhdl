@@ -84,7 +84,7 @@ Blockly.Blocks['controls_if'] = {
     }
     var container = document.createElement('mutation');
     if (this.elseifCount_) {
-      container.setAttribute('elseif', this.elseifCount_);
+      container.setAttribute('elsif', this.elseifCount_);
     }
     if (this.elseCount_) {
       container.setAttribute('else', 1);
@@ -97,7 +97,7 @@ Blockly.Blocks['controls_if'] = {
    * @this Blockly.Block
    */
   domToMutation: function(xmlElement) {
-    this.elseifCount_ = parseInt(xmlElement.getAttribute('elseif'), 10) || 0;
+    this.elseifCount_ = parseInt(xmlElement.getAttribute('elsif'), 10) || 0;
     this.elseCount_ = parseInt(xmlElement.getAttribute('else'), 10) || 0;
     this.updateShape_();
   },
@@ -221,7 +221,7 @@ Blockly.Blocks['controls_if'] = {
     for (var i = 1; i <= this.elseifCount_; i++) {
       this.appendValueInput('IF' + i)
           .setCheck('Boolean')
-		  .appendField('else if', "state_name" + i);
+		  .appendField('elsif', "state_name" + i);
       this.appendDummyInput('THEN'+ i)
           .appendField("then");
 	  this.setInputsInline(true);
@@ -261,7 +261,7 @@ Blockly.Blocks['controls_if_elseif'] = {
   init: function() {
     this.setColour(195);
     this.appendDummyInput()
-        .appendField('else if');
+        .appendField('elsif');
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setTooltip(Blockly.Msg.CONTROLS_IF_ELSEIF_TOOLTIP);
