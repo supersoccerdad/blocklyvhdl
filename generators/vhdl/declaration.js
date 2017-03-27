@@ -153,7 +153,7 @@ Blockly.VHDL['type_array'] = function(block) {
   var value_type1 = Blockly.VHDL.valueToCode(block, 'type1', Blockly.VHDL.ORDER_NONE);
   var value_type2 = Blockly.VHDL.valueToCode(block, 'type2', Blockly.VHDL.ORDER_NONE);
   var value_range = Blockly.VHDL.valueToCode(block, 'range', Blockly.VHDL.ORDER_NONE);
-  var code = 'type ' + value_type1 + ' is array (' + value_type2 + ') of\n' + value_range + ';\n';
+  var code = 'type ' + value_type1 + ' is array (' + value_type2 + ') of ' + value_range + ';\n';
   return code;
 };
 
