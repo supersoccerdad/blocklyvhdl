@@ -163,7 +163,7 @@ Blockly.Blocks['controls_when'] = {
           .appendField(Blockly.Msg.LISTS_CREATE_EMPTY_TITLE);
     }
     
-    // Add new inputs.
+    // Add new inputs. 
     for (var i = 1; i < this.itemCount_; i++) {
       if (!this.getInput('ADD' + i)) {
         var input = this.appendValueInput('ADD' + i)
@@ -194,10 +194,10 @@ Blockly.Blocks['controls_when'] = {
 			var input=this.getInput('ADD' + (i + 1));
 			var code = input.fieldRow["1"].text_;
 			var input=this.getInput('ADD' + i);
-			input.removeField("B" + i)
-			input.removeField("C" + i);
-			input.appendField(new Blockly.FieldTextInput(code), "B" + i)
-			input.appendField("when", "C" + i);
+//			input.removeField("B" + i)
+//			input.removeField("C" + i);
+//			input.appendField(new Blockly.FieldTextInput(code), "B" + i)
+//			input.appendField("when", "C" + i);
 		}
     this.detection=0;
     }
