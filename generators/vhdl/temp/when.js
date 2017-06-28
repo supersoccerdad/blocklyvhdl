@@ -24,6 +24,10 @@
  */
 'use strict';
 
+goog.provide('Blockly.VHDL.when');
+
+goog.require('Blockly.VHDL');
+
 Blockly.VHDL['controls_when'] = function(block) {
   var n = 0;
   var space = " "

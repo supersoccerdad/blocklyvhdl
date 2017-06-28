@@ -24,6 +24,7 @@
  */
 'use strict';
 
+
 Blockly.VHDL['assert'] = function(block) {
   var value_condition = Blockly.VHDL.valueToCode(block, 'condition', Blockly.VHDL.ORDER_NONE);
   var value_test_string = Blockly.VHDL.valueToCode(block, 'test_String', Blockly.VHDL.ORDER_NONE);

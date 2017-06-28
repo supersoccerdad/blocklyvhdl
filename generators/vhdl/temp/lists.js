@@ -24,6 +24,11 @@
  */
 'use strict';
 
+goog.provide('Blockly.VHDL.lists');
+
+goog.require('Blockly.VHDL');
+
+
 Blockly.VHDL['lists_create_empty'] = function(block) {
   // Create an empty list.
   return ['[]', Blockly.VHDL.ORDER_ATOMIC];

@@ -24,6 +24,11 @@
  */
 'use strict';
 
+goog.provide('Blockly.VHDL.vhdl_loop');
+
+goog.require('Blockly.VHDL');
+
+
 Blockly.VHDL['for_loop'] = function(block) {
   var text_label_name = block.getFieldValue('label_name');
   var text_loop = Blockly.VHDL.valueToCode(block, 'loop', Blockly.VHDL.ORDER_NONE);

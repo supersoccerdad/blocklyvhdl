@@ -24,13 +24,15 @@
  */
 'use strict';
 
+goog.provide('Blockly.VHDL.testbench');
 
-Blockly.VHDL['package'] = function(block) {
-  var text_name = block.getFieldValue('name');
-  var dropdown_package = block.getFieldValue('package');
-  var statements_declarations = VHDL.Blocks.statementToCode(block, 'declarations');
-  var text_end_name = block.getFieldValue('end_name');
-  var code = dropdown_package + ' ' + text_name + ' is ' + '\n' + statements_declarations + 'end ' + text_end_name + ';\n';;
+goog.require('Blockly.VHDL');
+
+Blockly.VHDL['assert'] = function(block) {
+  var value_condition = Blockly.VHDL.valueToCode(block, 'condition', Blockly.VHDL.ORDER_NONE);
+  var value_test_string = Blockly.VHDL.valueToCode(block, 'test_String', Blockly.VHDL.ORDER_NONE);
+  var dropdown_severity = block.getFieldValue('severity');
+  var code = 'assert ' + value_condition + ' report ' + value_test_string + ' severity ' + dropdown_severity + ';\n';
   return code;
 };
 

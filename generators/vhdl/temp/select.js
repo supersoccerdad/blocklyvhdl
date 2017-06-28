@@ -23,7 +23,11 @@
 * @author info@blocklyvhdl.com (hotmas erombas)
 */
 'use strict';
-
+ 
+goog.provide('Blockly.VHDL.select');
+ 
+goog.require('Blockly.VHDL');
+ 
  
 /**
 * Common HSV hue for all blocks in this category.

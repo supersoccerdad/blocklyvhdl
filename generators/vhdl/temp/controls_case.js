@@ -24,6 +24,13 @@
  */
 'use strict';
 
+goog.provide('Blockly.VHDL.controls_case');
+
+goog.require('Blockly.VHDL');
+
+goog.require('Blockly.VHDL');
+goog.require('Blockly.Blocks');
+
 Blockly.VHDL['controls_case'] = function(block) {
   // If/elseif/else condition.
   var n = 0;

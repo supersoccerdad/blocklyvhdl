@@ -27,7 +27,7 @@
 goog.provide('Blockly.VHDL');
 
 goog.require('Blockly.Generator');
-
+//goog.require('Blockly.Blocks');
 
 /**
  * VHDL code generator.

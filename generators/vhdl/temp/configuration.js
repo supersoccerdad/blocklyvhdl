@@ -24,6 +24,10 @@
  */
 'use strict';
 
+goog.provide('Blockly.VHDL.configuration');
+
+goog.require('Blockly.VHDL');
+
 Blockly.VHDL['configuration'] = function(block) {
   var text_name = block.getFieldValue('name');
   var text_type = block.getFieldValue('type');

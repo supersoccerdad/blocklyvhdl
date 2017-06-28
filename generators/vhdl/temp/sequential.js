@@ -2,7 +2,7 @@
  * @license
  * Visual Blocks Language
  *
- * Copyright 2015 Google Inc.
+ * Copyright 2012 Google Inc.
  * https://developers.google.com/blockly/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +19,14 @@
  */
 
 /**
- * @fileoverview Generating VHDL for logic blocks.
+ * @fileoverview Helper functions for generating vhdl for blocks.
  * @author info@blocklyvhdl.com (hotmas erombas)
  */
 'use strict';
+
+goog.provide('Blockly.VHDL.sequential');
+
+goog.require('Blockly.VHDL');
 
 Blockly.VHDL['for_loop'] = function(block) {
   var text_label_name = block.getFieldValue('label_name');
@@ -58,15 +62,19 @@ Blockly.VHDL['while_loop'] = function(block) {
   return code;
 };
 
+Blockly.VHDL['return'] = function(block) {
+  var value_condition = Blockly.VHDL.valueToCode(block, 'condition', Blockly.VHDL.ORDER_ATOMIC);
+  var code = 'return;\n';
+  return code;
+};
+
 Blockly.VHDL['exit'] = function(block) {
-  // TODO: Assemble VHDL into code variable.
   var code = 'exit;\n';
   return code;
 };
 
 Blockly.VHDL['exit_label'] = function(block) {
   var text_exit_label = block.getFieldValue('exit_label');
-  // TODO: Assemble VHDL into code variable.
   var code = 'exit ' + text_exit_label + ';\n';
   return code;
 };
@@ -74,28 +82,26 @@ Blockly.VHDL['exit_label'] = function(block) {
 Blockly.VHDL['exit_when'] = function(block) {
   var text_exit_when = block.getFieldValue('exit_when');
   var value_exit_when = Blockly.VHDL.valueToCode(block, 'exit_when', Blockly.VHDL.ORDER_NONE);
-  // TODO: Assemble VHDL into code variable.
   var code = 'exit ' + text_exit_when +  ' when ' + value_exit_when + ';\n';
   return code;
 };
 
-Blockly.VHDL['generate'] = function(block) {
-  var text_generate_label = block.getFieldValue('generate_label');
-  var value_start = Blockly.VHDL.valueToCode(block, 'start', Blockly.VHDL.ORDER_NONE);
-  var value_end = Blockly.VHDL.valueToCode(block, 'end', Blockly.VHDL.ORDER_NONE);
-  var statements_generate = Blockly.VHDL.statementToCode(block, 'generate');
-  var text_end_label = block.getFieldValue('end_label');
-  // TODO: Assemble VHDL into code variable.
-  var code = text_generate_label + ': for ' + value_start + ' in ' + value_end + ' generate\n'; 
-  var code = code + statements_generate + 'end generate ' + text_end_label + ';\n';
+Blockly.VHDL['wait'] = function(block) {
+  var code = 'wait;\n';
   return code;
 };
 
-Blockly.VHDL['signal_index'] = function(block) {
-  var value_signal = Blockly.VHDL.valueToCode(block, 'signal', Blockly.VHDL.ORDER_NONE);
-  var text_index = block.getFieldValue('index');
-  // TODO: Assemble VHDL into code variable.
-  var code = value_signal + '(' + text_index + ')';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.VHDL.ORDER_NONE];
+Blockly.VHDL['wait_list'] = function(block) {
+  var dropdown_wait_list = block.getFieldValue('wait_list2');
+  var value_wait = Blockly.VHDL.valueToCode(block, 'wait_list3', Blockly.VHDL.ORDER_NONE);
+  var code = 'wait ' + dropdown_wait_list + ' ' + value_wait + ';\n';
+  return code;
 };
+
+Blockly.VHDL['null'] = function(block) {
+  var code = 'null;\n';
+  return code;
+};
+
+
+
