@@ -98,7 +98,7 @@ Blockly.VHDL['name_type'] = function(block) {
   var value_name = Blockly.VHDL.valueToCode(block, 'name', Blockly.VHDL.ORDER_NONE);
   var value_type = Blockly.VHDL.valueToCode(block, 'type', Blockly.VHDL.ORDER_NONE);
   // TODO: Assemble JavaScript into code variable.
-  var code = value_name + ' : ' + value_type + '\n';
+  var code = value_name + ' : ' + value_type + ';\n';
   return code;
 };
 

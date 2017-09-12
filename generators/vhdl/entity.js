@@ -37,7 +37,7 @@ Blockly.VHDL['entity'] = function(block) {
 Blockly.VHDL['generic'] = function(block) {
   var dropdown_generic = block.getFieldValue('port_list');
   var statements_generic_inputs = Blockly.VHDL.statementToCode(block, 'generic_inputs');
-  var statements_generic_inputs = statements_generic_inputs.substring(0, statements_generic_inputs.length-2)
+//  var statements_generic_inputs = statements_generic_inputs.substring(0, statements_generic_inputs.length-2)
   var code = dropdown_generic + ' (\n' + statements_generic_inputs;
   var code = code + ');\n';
   return code;
