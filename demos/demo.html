@@ -76,13 +76,10 @@ function fromXml() {
 }
 
 function toCode(lang) {
-alert("test")
   var output = document.getElementById('importExport');
-//    	alert(output.value)
-//  output.value = Blockly[lang].workspaceToCode(workspace);
-//  	alert(output.value)
     output.value = Blockly.VHDL.workspaceToCode(workspace);
 	alert(output.value)
+//  var test = document.getElementById('importExport');
   taChange();
 }
 
@@ -119,17 +116,20 @@ function logger(e) {
   console.log(e);
 }
  
-function saveTextAsFile()
+function saveTextAsFile(name)
 {
-  var output = document.getElementById('importExport');
-  var xml = Blockly.Xml.workspaceToDom(workspace);
-//    output.value = Blockly.Xml.domToPrettyText(xml);
-//	alert(output.value);
-var textToSave = output.value;
-//var textToSave = document.getElementById("inputTextToSave").value;
+var code = Blockly.VHDL.workspaceToCode(workspace);
+var output = document.getElementById('importExport');
+var xmlfile = Blockly.Xml.workspaceToDom(workspace); 
+var vhdlfile = Blockly.Xml.domToPrettyText(xmlfile);
+if (name=='vhdl'){
+var textToSave = code;
+} else if (name='xml') {
+var textToSave = vhdlfile;
+}
 var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
 var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value + "." + name;
 var downloadLink = document.createElement("a");
 downloadLink.download = fileNameToSaveAs;
 downloadLink.innerHTML = "Download File";
@@ -139,6 +139,27 @@ downloadLink.style.display = "none";
 document.body.appendChild(downloadLink);
 downloadLink.click();
 }
+
+function CompileSimulate()
+{
+var code = Blockly.SYNTH.workspaceToCode(workspace);
+var xml = Blockly.Xml.workspaceToDom(workspace);
+var output = Blockly.Xml.domToPrettyText(xml);
+var textToSave = output;
+var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+var fileNameToSaveAs = "course1" + ".html";
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+downloadLink.href = textToSaveAsURL;
+downloadLink.onclick = destroyClickedElement;
+downloadLink.style.display = "none";
+document.body.appendChild(downloadLink);
+downloadLink.click();
+}
+
+
 function destroyClickedElement(event)
 {
 document.body.removeChild(event.target);
@@ -194,6 +215,11 @@ tr.d0 td {
 }
 tr.d1 td {
   font-size:8pxl;
+}
+
+#FilesDiv {
+  float: right;
+  font-family: monospace;
 }
 
 </style>
@@ -311,6 +337,10 @@ tr.d1 td {
 	</category>
 	<category name="Testbench" colour="270">
 	      <block type="assert"></block>
+		  <block type="testbench"></block>
+	      <block type="tb_clockgen"></block>
+	      <block type="tb_signal"></block>
+		  <block type="testbench_out"></block>		  
 	</category>
     <category name="File" colour="160">
 		  <block type="file"></block>	
@@ -328,25 +358,19 @@ tr.d1 td {
   <div class="container">
 
   <p align="center">
-    <input type="button" value="To VHDL" onclick="toCode('VHDL')">
+    <input type="button" value="Generate VHDL" onclick="toCode('VHDL')">
     &nbsp;
     <br>
     <textarea id="importExport" style="width: 34%" rows="34"></textarea>
-<!--      onchange="taChange();" onkeyup="taChange()"></textarea>-->
-  </p>
-  
-  <table align="right" ; width="34%">
-<tr>
-<td><font size="1">Filename to Save As:</font></td>
-<td><font size="1"><input id="inputFileNameToSaveAs"></input></font></td>
-<td><button onclick="saveTextAsFile()"><font size="1">Save to File</font></button></td>
-</tr>
-<tr>
-<td><font size="1">Select a File to Load:</font></td>
-<td><font size="1"><input type="file" id="fileToLoad"></font></td>
-<td><button onclick="loadFileAsText()"><font size="1">Load File</button></font><td>
-</tr>
-</table>
+
+<button onclick="saveTextAsFile('xml')"><font size="1">Save as XML</font></button>
+<button onclick="saveTextAsFile('vhdl')"><font size="1">Save as VHDL</font></button>
+<font size="1"><input id="inputFileNameToSaveAs"></input></font>
+    <br>
+<font size="1">Load BlocklVHDL file:</font>
+<font size="1"><input type="file" id="fileToLoad"></font>
+<button onclick="loadFileAsText()"><font size="1">Load File</button></font></p>
+
 </div>
 </body>
 </html>

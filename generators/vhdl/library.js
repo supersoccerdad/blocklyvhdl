@@ -77,7 +77,7 @@ Blockly.VHDL['vector_init'] = function(block) {
   var dropdown_range = block.getFieldValue('range');
   var text_lsb = Blockly.VHDL.valueToCode(block, 'lsb', Blockly.VHDL.ORDER_NONE);
   var text_init = Blockly.VHDL.valueToCode(block, 'init', Blockly.VHDL.ORDER_NONE);
-  var code = dropdown_vector + "(" + text_msb + " " + dropdown_range + " " + text_lsb + ") :=" + text_init + ";"; //"\"" + text_init + "\"";
+  var code = dropdown_vector + "(" + text_msb + " " + dropdown_range + " " + text_lsb + ") :=" + text_init;
   return [code, Blockly.VHDL.ORDER_NONE];
 };
 
