@@ -54,3 +54,100 @@ Blockly.Blocks['assert'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+/*
+Blockly.Blocks['testbench'] = {
+  init: function() {
+    this.appendStatementInput("testbench")
+        .setCheck(null)
+        .appendField("testbench");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+*/
+
+Blockly.Blocks['testbench'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("testbench:")
+        .appendField(new Blockly.FieldTextInput("default"), "testbench");
+    this.appendStatementInput("testbench")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setColour(230);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['testbench_out'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("signal\\output")
+        .appendField(new Blockly.FieldTextInput("default"), "output");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(270);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['tb_out'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("output")
+        .appendField(new Blockly.FieldTextInput("default"), "output");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(270);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['tb_internal'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("internal signal")
+        .appendField(new Blockly.FieldTextInput("default"), "internal");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(270);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['tb_clockgen'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("clockname")
+        .appendField(new Blockly.FieldTextInput(""), "clockname")
+        .appendField("periods")
+        .appendField(new Blockly.FieldTextInput(""), "periods");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['tb_signal'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("input")
+        .appendField(new Blockly.FieldTextInput(""), "signalname")
+        .appendField("trace")
+        .appendField(new Blockly.FieldTextInput(""), "trace");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};

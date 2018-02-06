@@ -213,7 +213,7 @@ class Gen_compressed(threading.Thread):
 #      self.gen_generator("python")
 #      self.gen_generator("php")
 #      self.gen_generator("dart")
-#      self.gen_generator("synth")
+      self.gen_generator("synth")
       self.gen_generator("vhdl")
 
 

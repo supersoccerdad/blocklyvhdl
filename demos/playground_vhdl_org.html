@@ -3,50 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>BlocklyVHDL Playground</title>
-<script src="C:/TEMP/blocklyvhdl-master/blocklyvhdl-master/appengine/storage.js"></script>
-<!--<script src="../appengine/storage.js"></script>
-
-<script src="../blockly_compressed.js"></script>
-<script src="../blocks_compressed.js"></script>
-<script src="../vhdl_compressed.js"></script>
-<script src="../synth_compressed.js"></script>
-<script src="../msg/js/en.js"></script>
-<script src="../msg/messages.js"></script>-->
-
-<!--<script src="../blockly_uncompressed.js"></script>
-<script src="../blockly_compressed.js"></script>
-<script src="../blocks_compressed.js"></script>
-<script src="../vhdl_compressed.js"></script>
-<script src="../synth_compressed.js"></script>-->
-
-<script src="C:/TEMP/blocklyvhdl-master/blocklyvhdl-master/blockly_compressed.js"></script>
-<script src="C:/TEMP/blocklyvhdl-master/blocklyvhdl-master/blocks_compressed.js"></script>
-<script src="C:/TEMP/blocklyvhdl-master/blocklyvhdl-master/vhdl_compressed.js"></script>
-<script src="C:/TEMP/blocklyvhdl-master/blocklyvhdl-master/synth_compressed.js"></script>
-
-
-<!--
-<script src="../generators/synth.js"></script>
-<script src="../generators/synth/entity.js"></script>
-<script src="../generators/synth/library.js"></script>
-<script src="../generators/synth/entity.js"></script>
-<script src="../generators/synth/architecture.js"></script>
-<script src="../generators/synth/package.js"></script>
-<script src="../generators/synth/configuration.js"></script>
-<script src="../generators/synth/function.js"></script>
-<script src="../generators/synth/declaration.js"></script>
-<script src="../generators/synth/concurrent.js"></script>
-<script src="../generators/synth/sequential.js"></script>
-<script src="../generators/synth/controls_if.js"></script>
-<script src="../generators/synth/controls_case.js"></script>
-<script src="../generators/synth/when.js"></script>
-<script src="../generators/synth/modules.js"></script>
-<script src="../generators/synth/select.js"></script>
-<script src="../generators/synth/expression.js"></script>
-<script src="../generators/synth/testbench.js"></script>
-<script src="../generators/synth/file.js"></script>
-<script src="../generators/synth/lists.js"></script>
-
+<script src="../appengine/storage.js"></script>
+<script src="../blockly_uncompressed.js"></script>
 
 <script src="../generators/vhdl.js"></script>
 <script src="../generators/vhdl/library.js"></script>
@@ -66,11 +24,10 @@
 <script src="../generators/vhdl/expression.js"></script>
 <script src="../generators/vhdl/testbench.js"></script>
 <script src="../generators/vhdl/file.js"></script>
-<script src="../generators/vhdl/lists.js"></script>-->
+<script src="../generators/vhdl/lists.js"></script>
 
-<script src="C:/TEMP/blocklyvhdl-master/blocklyvhdl-master/msg/messages.js"></script>
-<!--<script src="../msg/messages.js"></script>
-<!--
+<script src="../msg/messages.js"></script>
+
 <script src="../blocks/library.js"></script>
 <script src="../blocks/entity.js"></script>
 <script src="../blocks/architecture.js"></script>
@@ -90,7 +47,7 @@
 <script src="../blocks/testbench.js"></script>
 <script src="../blocks/file.js"></script>
 <script src="../blocks/when.js"></script>
-<script src="../blocks/modules.js"></script>-->
+<script src="../blocks/modules.js"></script>
 
 <script>
 'use strict';
@@ -160,9 +117,8 @@ function fromXml() {
 
 function toCode(lang) {
   var output = document.getElementById('importExport');
-  output.value = Blockly.VHDL.workspaceToCode(workspace);
-  var test = document.getElementById('importExport');
-//  taChange();
+  output.value = Blockly[lang].workspaceToCode(workspace);
+  taChange();
 }
 
 // Disable the "Import from XML" button if the XML is invalid.
@@ -200,10 +156,12 @@ function logger(e) {
  
 function saveTextAsFile()
 {
-var code = Blockly.VHDL.workspaceToCode(workspace);
-var output = document.getElementById('importExport');
-var xml = Blockly.Xml.workspaceToDom(workspace);
-var textToSave = code;
+  var output = document.getElementById('importExport');
+  var xml = Blockly.Xml.workspaceToDom(workspace);
+//    output.value = Blockly.Xml.domToPrettyText(xml);
+//	alert(output.value);
+var textToSave = output.value;
+//var textToSave = document.getElementById("inputTextToSave").value;
 var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
 var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
 var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
@@ -216,27 +174,6 @@ downloadLink.style.display = "none";
 document.body.appendChild(downloadLink);
 downloadLink.click();
 }
-function CompileSimulate()
-{
-var code = Blockly.SYNTH.workspaceToCode(workspace);
-var textToSave = code;
-var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
-var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-var fileNameToSaveAs = "course1" + ".html";
-var downloadLink = document.createElement("a");
-downloadLink.download = fileNameToSaveAs;
-downloadLink.innerHTML = "Download File";
-downloadLink.href = textToSaveAsURL;
-downloadLink.onclick = destroyClickedElement;
-downloadLink.style.display = "none";
-document.body.appendChild(downloadLink);
-downloadLink.click();
-}
-
-function Simulate() {
-    window.open('c:/blocklyvhdl/tutorial/course1.html', "", "width=600,height=300");	
-}
-
 function destroyClickedElement(event)
 {
 document.body.removeChild(event.target);
@@ -408,11 +345,7 @@ tr.d1 td {
 		  <block type="time_association"></block>		  
 	</category>
 	<category name="Testbench" colour="270">
-<!--	      <block type="assert"></block>-->
-		  <block type="testbench"></block>
-<!--	      <block type="tb_clockgen"></block>-->
-	      <block type="tb_signal"></block>
-		  <block type="testbench_out"></block>		  
+	      <block type="assert"></block>
 	</category>
     <category name="File" colour="160">
 		  <block type="file"></block>	
@@ -431,11 +364,6 @@ tr.d1 td {
 
   <p align="center">
     <input type="button" value="To VHDL" onclick="toCode('VHDL')">
-	<input type="button" value="Compile" onclick="CompileSimulate('VHDL')">
-
-<!--	<td><font size="1"><input type="file" id="fileToSimulate"></font></td>-->
-	<button onclick="Simulate()"><font size="1">Simulate</button>
-<!--    <input type="button" value="Simulate1" onclick="Simulate">-->
     &nbsp;
     <br>
     <textarea id="importExport" style="width: 34%" rows="34"

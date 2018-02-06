@@ -52,7 +52,8 @@ Blockly.Blocks['controls_when'] = {
         .appendField("when");
     this.itemCount_ = 3;
     this.updateShape_();
-    this.setOutput(true, 'Array');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setMutator(new Blockly.Mutator(['when_item']));
     this.setTooltip(Blockly.Msg.LISTS_CREATE_WITH_TOOLTIP);
 	this.setColour(90);

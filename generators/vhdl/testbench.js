@@ -24,14 +24,47 @@
  */
 'use strict';
 
-
 Blockly.VHDL['assert'] = function(block) {
   var value_condition = Blockly.VHDL.valueToCode(block, 'condition', Blockly.VHDL.ORDER_NONE);
   var value_test_string = Blockly.VHDL.valueToCode(block, 'test_String', Blockly.VHDL.ORDER_NONE);
   var dropdown_severity = block.getFieldValue('severity');
-  var code = 'assert ' + value_condition + ' report ' + value_test_string + ' severity ' + dropdown_severity + ';\n';
+  var code = "";
   return code;
 };
 
+Blockly.VHDL['testbench'] = function(block) {
+  var text_testbench = block.getFieldValue('testbench');
+  var statements_testbench = Blockly.VHDL.statementToCode(block, 'testbench');
+  var res= statements_testbench.split(";");
+  var code = ""
+  return code;
+};
+
+Blockly.VHDL['tb_clockgen'] = function(block) {
+  var text_clockname = block.getFieldValue('clockname');
+  var text_periods = block.getFieldValue('periods');
+  // TODO: Assemble JavaScript into code variable.
+  
+  var code = '{name: \'' + text_clockname + '\', wave: \'p';
+  for (var n=0; n<text_periods; n++){
+		code = code + '.' ;
+  }
+  code = code + '\'},\n';
+  return code;
+};
+
+Blockly.VHDL['tb_signal'] = function(block) {
+  var text_signalname = block.getFieldValue('signalname');
+  var text_trace = block.getFieldValue('trace');
+  var code= "var " + "inp_" + text_signalname +  " = " +  "\'" + text_trace + "\';\n"
+
+  return code;
+};
+
+Blockly.VHDL['testbench_out'] = function(block) {
+  var text_output = block.getFieldValue('output');
+  var code = 'var ' + "out_" + text_output + " = \'\'";
+  return code;
+};
 
 
