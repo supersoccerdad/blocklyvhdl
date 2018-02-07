@@ -33,7 +33,8 @@ Blockly.VHDL['operator'] = function(block) {
 };
 
 Blockly.VHDL['qualified'] = function(block) {
-  var text_name = block.getFieldValue('name');
+//  var text_name = block.getFieldValue('name');
+  var text_name = Blockly.VHDL.valueToCode(block, 'name', Blockly.VHDL.ORDER_NONE);
   var dropdown_range = block.getFieldValue('range');
   var code = text_name + '\'' + dropdown_range;
   return [code, Blockly.VHDL.ORDER_NONE];

@@ -39,8 +39,10 @@ Blockly.VHDL['function'] = function(block) {
 };
 
 Blockly.VHDL['function_call'] = function(block) {
-  var text_function_name = block.getFieldValue('function_name');
-  var text_parameter_list = block.getFieldValue('parameter_list');
+//  var text_function_name = block.getFieldValue('function_name');
+  var text_function_name = Blockly.VHDL.valueToCode(block, 'function_name', Blockly.VHDL.ORDER_NONE);
+//  var text_parameter_list = block.getFieldValue('parameter_list');
+  var text_parameter_list = Blockly.VHDL.valueToCode(block, 'parameter_list', Blockly.VHDL.ORDER_NONE);
   var code = text_function_name + '(' + text_parameter_list + ');\n';
   return [code, Blockly.VHDL.ORDER_NONE];
 };
