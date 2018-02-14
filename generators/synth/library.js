@@ -27,9 +27,10 @@
 Blockly.SYNTH['library'] = function(block) {
   var statements_declarations = Blockly.SYNTH.statementToCode(block, 'declarations');
   var dropdown_ieee = block.getFieldValue('library');
-  var code = "<!DOCTYPE html>\n<html>\n<body>\n"
-  code = code + "<body onload=\"WaveDrom.ProcessAll()\">\n" 
-  code = code + statements_declarations
+//  var code = "<!DOCTYPE html>\n<html>\n<body>\n"
+//  code = code + "<body onload=\"WaveDrom.ProcessAll()\">\n" 
+//  code = code + statements_declarations
+  var code = statements_declarations
   return code;
 };
 

@@ -53,26 +53,36 @@ Blockly.SYNTH['port_pin_name'] = function(block) {
   var value_pin_type = Blockly.SYNTH.valueToCode(block, 'pin_type', Blockly.SYNTH.ORDER_NONE);
   var code ="";
   if (dropdown_in_out=="in"){
-    code = 'var ' + value_pin_name + '=false;\n';
-	code = code + 'var ' + value_pin_name + '_pre ' + ';\n';
-	code = code + 'var ' + value_pin_name + "_data=[]" + ';\n';
-	code = code + 'var ' + value_pin_name + "_wave=\'\'" + ';\n';	
+//    code = 'var ' + value_pin_name + '=false;\n';
+//	code = code + 'var ' + value_pin_name + '_pre ' + ';\n';
+//	code = code + 'var ' + value_pin_name + "_data=[]" + ';\n';
+//	code = code + 'var ' + value_pin_name + "_wave=\'\'" + ';\n';
+//	code = code + 'var ' + value_pin_name + "_type=\'" + value_pin_type + "\'" + ';\n';
+
+code = code + 'var ' + value_pin_name + '= {val:false, pre:\"\", data:\"\", wave:\"\", type:\"\"};\n'
+code = code + value_pin_name + '.type=\"' + value_pin_type + '\";\n' 
+	
     code = code + 'function ' + value_pin_name + 'f(latchstr, bypass) {\n'
-	code = code + "if (" + value_pin_name + "==\'\' | " + value_pin_name + "== \' \'){" + value_pin_name + "=\'u\'}\n"
+	code = code + "if (" + value_pin_name + ".val==\'\' | " + value_pin_name + ".val== \' \'){" + value_pin_name + ".val=\'u\'}\n"
 	
 	code = code + "if (!bypass){\n"
-    code = code + "if(" + value_pin_name + "==\'u\' || " + value_pin_name + "==\'w\' || " + value_pin_name + "==\'d\'){" + value_pin_name + "_data.push(" + value_pin_name + "); " + value_pin_name + "=\'=\'}\n"
-    code = code + 'if (' + value_pin_name + '==' + value_pin_name + '_pre && ' + value_pin_name + '_wave!=\"\") {' + value_pin_name + '_wave=' + value_pin_name + '_wave + \".\"} else {' + value_pin_name + '_wave=' + value_pin_name + '_wave + ' + value_pin_name + '}\n'
-    code = code + value_pin_name + "_pre=" + value_pin_name + "\n"
+    code = code + "if(" + value_pin_name + ".val==\'u\' || " + value_pin_name + ".val==\'w\' || " + value_pin_name + ".val==\'d\'){" + value_pin_name + ".data.push(" + value_pin_name + ".val); " + value_pin_name + ".val=\'=\'}\n"
+    code = code + 'if (' + value_pin_name + '.val==' + value_pin_name + '.pre && ' + value_pin_name + '.wave!=\"\") {' + value_pin_name + '.wave=' + value_pin_name + '.wave + \".\"} else {' + value_pin_name + '.wave=' + value_pin_name + '.wave + ' + value_pin_name + '.val}\n'
+    code = code + value_pin_name + ".pre=" + value_pin_name + ".val\n"
 	code = code + '}\n'
-	code = code + 'return ' + value_pin_name + '\n'
+	code = code + 'return ' + value_pin_name + '.val\n'
 	code = code + '}\n'
 
-  } else { 
-    code = code + 'var ' + value_pin_name + '=\'\';\n';
-	code = code + 'var ' + value_pin_name + '_pre ' + ';\n';
-	code = code + 'var ' + value_pin_name + "_wave=\'\' " + ';\n';
-	code = code + 'var ' + value_pin_name + "_data=[]" + ';\n';
+  } else {
+
+code = 	code + 'var ' + value_pin_name + '= {val:false, pre:\"\", data:\"\", wave:\"\", type:\"' + value_pin_type + '\"};\n'
+code = code + value_pin_name + '.type=\"' + value_pin_type + '\";\n'  
+//    code = code + 'var ' + value_pin_name + '.val=\'\';\n';
+//	code = code + 'var ' + value_pin_name + '.pre ' + ';\n';
+//	code = code + 'var ' + value_pin_name + ".wave=\'\' " + ';\n';
+//	code = code + 'var ' + value_pin_name + ".data=[]" + ';\n';
+	
+//	code = code + 'var ' + value_pin_name + ".type=\'" + value_pin_type + "\'" + ';\n';
   }
   return code;
 };

@@ -30,10 +30,11 @@ Blockly.VHDL['controls_when'] = function(block) {
   var text_label = block.getFieldValue('label');
   var text_A = block.getFieldValue('A');
   var text_B = block.getFieldValue('B');
+  var spacer=text_A.length + text_label.length + 4;
   var argument = Blockly.VHDL.valueToCode(block, 'ADD0', Blockly.VHDL.ORDER_NONE) || 'false';
   if (text_label != '') {
   var code = text_label + ': ' + text_A + ' <= ' + text_B + ' when ' + argument; } 
-  else {code= text_A + space.repeat(text_A.length + text_label.length) +  ' <= ' + text_B + ' when ' + argument;}
+  else {code= text_A + ' <= ' + text_B + ' when ' + argument;}
   if (block.elseCount_) {
     var argument = Blockly.VHDL.valueToCode(block, 'ELSE', Blockly.VHDL.ORDER_NONE) || 'false';
     code += 'else \n' + argument;
@@ -44,7 +45,7 @@ Blockly.VHDL['controls_when'] = function(block) {
     argument = Blockly.VHDL.valueToCode(block, 'ADD' + n,
     Blockly.VHDL.ORDER_NONE) || 'false';
 
-	code += ' else \n' + space.repeat(text_A.length + text_label.length) + '<= ' + text_B + ' when ' + argument
+    code += ' else \n' + space.repeat(spacer)  + text_B + ' when ' + argument + ';'
   if (n==block.elseifCount_) {
     argument = Blockly.VHDL.valueToCode(block, 'ELSE' + n,
     Blockly.VHDL.ORDER_NONE) || 'false';

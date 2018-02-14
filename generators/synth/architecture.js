@@ -87,57 +87,142 @@ for(var n=0; n<strcode.length-1; n++){
   strcode[n]=strcode[n].trim()
   strcode[n]=strcode[n].split(" ");
   test=strcode[n][0]
-//  if (test!="if" && test!="}") {
-//  }
+  if (test!="if" && test!="}") {
+  }
 }
+
+statements_declarations  = statements_declarations  + 'var error=\"\"\n'
 
 code = statements_declarations + "\nfunction " + text_entity_name + "(){\n" + code;
 var lines = code.split(/\r\n|\r|\n/);  
 var funcarray=[]
+var label=[]
 var funcname=""
 var line
 for (var n=0; n<lines.length; n++){
+
 	line = lines[n].trim().split(" ")
-	if (line[0]=="function" && line[1] && (line[1].indexOf("latchstr")!=-1)){
-//	if (line[0]=="function" && line[1] && line[1].includes("latchstr")){
-		funcarray.push(line[1])
-	}
+	if (line[0]=="function" && line[1] && (line[1].indexOf("latchstr")!=-1)){funcarray.push(line[1])}
+	if (line[0]=="Process" && line[2]=="function" && line[2] ){funcarray.push(line[3]);label.push(line[0]); alert(funcarray[0])}	
 }
-var rescntr=1
+
+
+
+//var rescntr=1
 var doublefound=false
 var resolutioncode=""
 var deletename=""
 for (var n=0; n<funcarray.length; n++){
+	var rescntr=1
 	for (var m=n+1; m<funcarray.length; m++){
+		alert("n="+n + " " + "m=" + m)
 		if(funcarray[n]==funcarray[m]){
+			
+			if (rescntr==1){
 			code=code.replace("function " + funcarray[m], "function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr,")
 			code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
 			rescntr=rescntr+1
-			doublefound=true
+			}
+			code=code.replace("function " + funcarray[m], "function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr,")
+			code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
+			
+			alert("funcarray[m]=" + funcarray[m])
+			if (code.indexOf("function " + funcarray[m])!=-1){
+//				alert("test6=" + code.indexOf("function " + funcarray[m]))
+			rescntr=rescntr+1}
+			alert("resntr=" + rescntr)
+//		    doublefound=true
+//			alert("double=true " + funcarray[n] + " " + n + " " + funcarray[m] + " "+ m)}
 		}
-		if (doublefound==true){
+//		if (doublefound==true){
 	       funcname=funcarray[n].split("f(")[0]
-	       code=code.replace("function " + funcarray[n], "function "+ funcarray[n].split("(")[0] + "_" + rescntr + "(latchstr,")
-		   code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
+//        }
+//}
+//	       code=code.replace("function " + funcarray[n], "function "+ funcarray[n].split("(")[0] + "_" + rescntr + "(latchstr,")
+//		   code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
+alert("resolutioncode.searchfuncarray[n]=" + resolutioncode)
+//funcarray[n]=funcarray[n].replace(",","")
+var test5=funcarray[n]
+//           if(resolutioncode=="" || resolutioncode.search(test)==-1){
+//			              if(resolutioncode=="" || resolutioncode.search("resolution")==-1){
+						  if(resolutioncode=="" || resolutioncode.search("function " + funcname)==-1){
+			   alert("test2222=" + test)
+//			   var testc=funcname+"_type"
+//alert(code)
+//alert("testtest"+ code.search("c_type=\'std_logic\';"))
+if(code.search(funcname + ".type=\'std_logic\';")==-1 && rescntr>1){
+	alert("func_name" + funcname + ".type=\'std_logic\';")
+
 		   resolutioncode=resolutioncode + funcname + "f(\'\', false)\n"
 		   resolutioncode=resolutioncode + "var " + funcname + "r=\'\';\n";
            resolutioncode=resolutioncode + "function " + funcarray[n] + " bypass){\n"
+		   resolutioncode=resolutioncode + "if ("+ funcname + ".type==\'std_logic\'){\n"
 		   resolutioncode=resolutioncode + funcname + "r=" + funcname + "f_" + "1(\'\', true)\n"   
            resolutioncode=resolutioncode + "for (var m=2;m<" + (rescntr + 1) + ";m++){\n"
            resolutioncode=resolutioncode + funcname + "r=resolution(eval(\"" + funcname + "f_\" + m + \"(latchstr, true)\")," + funcname + "r)\n}"
            resolutioncode=resolutioncode + "if (!bypass){\n"
-           resolutioncode=resolutioncode + "if(" + funcname + "r==\'u\' || " + funcname + "r==\'w\' || " + funcname + "r==\'d\'){" + funcname + "_data.push(" + funcname + "r); " + funcname + "r=\'=\'}\n"		   
-           resolutioncode=resolutioncode + "if (" + funcname + "r==" + funcname + "_pre && " + funcname + "_wave!=\"\") {" + funcname + "_wave=" + funcname + "_wave + \".\"} else {" + funcname + "_wave="  + funcname + "_wave + " + funcname + "r}\n"
-           resolutioncode=resolutioncode + funcname + "_pre=" + funcname + "r\n"
+           resolutioncode=resolutioncode + "if(" + funcname + "r==\'u\' || " + funcname + "r==\'w\' || " + funcname + "r==\'d\'){" + funcname + ".data.push(" + funcname + "r); " + funcname + "r=\'=\'}\n"		   
+           resolutioncode=resolutioncode + "if (" + funcname + "r==" + funcname + ".pre && " + funcname + ".wave!=\"\") {" + funcname + ".wave=" + funcname + ".wave + \".\"} else {" + funcname + ".wave="  + funcname + ".wave + " + funcname + "r}\n"
+           resolutioncode=resolutioncode + funcname + ".pre=" + funcname + "r\n"
            resolutioncode=resolutioncode + "}\n"
            resolutioncode=resolutioncode + "return " + funcname + "r\n"
-           resolutioncode=resolutioncode + "}\n"
-           doublefound=false	   
-        }
-	}
+   		   resolutioncode=resolutioncode + "}\n"
+		   resolutioncode=resolutioncode + "error=error + \'<br>Error: one or more sources are driving signal c which is not from a resolved type (std_logic)\'\n" 
+ //  	   resolutioncode=resolutioncode + "alert(\'signal " + funcname + " is not from a resolved type (std_logic)\')\n"		   
+		   resolutioncode=resolutioncode + "}\n"
+		   }
 }
+}
+//           doublefound=false	   
+//        }
+//	}
+//	           doublefound=false
+}
+// Count the total of same functions in a process and put them in the else block
+var func_num=0
+var end_num=0;
+var process_else="";
+var previous_line=""
+var lines = code.split(/\r\n|\r|\n/);  
+for (var n=0; n<lines.length; n++){
+  line = lines[n].trim().split(" ")
+  if (line[0]=="Process" && line[2]=="function" ){
+	  alert("line[3]=" + line[3])
+  if(line[3].indexOf("_")!=-1 ){
+	    func_num=func_num+1
+//  process_else=process_else + "function " + funcname + "f_"+ func_num + "(latchstr, bypass){return\'hold\'}\n"
+    process_else=process_else + "function " + line[3] + " bypass){return\'hold\'}\n"
+  } else {
+	  	    func_num=func_num+1
+  process_else=process_else + "function " + line[3] + " bypass){return\'hold\'}\n"	  
+  }
+ }	 
+if (line[0]=="Process}" && line[2]!="{function"){
+	alert(line)
+    code=code.replace("  Process} else {", "  Process_} else {" + process_else)
+	  end_num=func_num
+	  process_else=""
+  } 
+  previous_line=line[0]
+}
+	alert("func_num rescntr=" + func_num + " " + rescntr)
+//because the decleration has one }
+//if(func_num==0 && rescntr==1){ funcarray!=-1
+//if(end_num>0 && rescntr==0){
+	alert("lastline = "+ lines[lines.length-2])
+//if(end_num>0 && funcarray.length==end_num){
+if(end_num>0 && lines[lines.length-2].indexOf("Process")!=-1){
+	alert("end_num funcarray[]=" + end_num + " " + funcarray)
+code=code+"}\n"
+}
+
 code=code+resolutioncode
 code = code + "}\n" 
+
+code=code.replace(/Process_/g, "")
+code=code.replace(/Process/g, "")
+
+
 return code;
 };
 

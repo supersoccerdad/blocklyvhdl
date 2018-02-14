@@ -206,29 +206,39 @@ res = res.replace(/ftemp, true/g, "");
 // Split the decleration string in substirng sepperated by commas
 res = res.split(" ");
 //discard double function calls
+var temptype=[]
 for( var m=0; m<res.length; m=m+2){
 	if (res5.indexOf(res[m])==-1){
 //    if (!res5.includes(res[m])){
         if (res.indexOf("f(temp, true)")==-1 && res.indexOf("0")==-1){
 //	    if (!res.includes("f(temp, true)") && !res.includes("0")){
+//	alert("res[" + m + "]=" + res[m])
             res5=res5 + res[m] + "f(temp, true)\n"
+			temptype=temptype+res[m] + ".type,"	
         }
     }
 }
-value_variable=value_variable.replace(" ,", ",")
 
+temptype= "[" + temptype + value_signal_name + ".type]\n"
+
+value_variable=value_variable.replace(" ,", ",")
+value_variable=value_variable + ";"
+value_variable = value_variable.replace(");", ",temptype);")
+alert("value_variable= " + value_variable)
+
+code = code + "var temptype=" + temptype
 code = code + res5		
-code = code + value_signal_name + "=" + value_variable + ";\n"
+code = code + value_signal_name + ".val=" + value_variable + "\n"
 code = code + "if (!bypass){\n"
-code = code + "if(" + value_signal_name + "==\'u\' || " + value_signal_name + "==\'w\' || " + value_signal_name + "==\'d\'){" + value_signal_name + "_data.push(" + value_signal_name + "); " + value_signal_name + "=\'=\'}\n"
-code = code + "if (" + value_signal_name + "==" + value_signal_name + "_pre && " + value_signal_name + "_wave!=\"\"" + ") {" + value_signal_name + "_wave=" + value_signal_name + "_wave + \".\"} else {" + value_signal_name + "_wave=" + value_signal_name + "_wave + " + value_signal_name + "}\n" 
-code = code + value_signal_name + "_pre=" + value_signal_name + "\n}"
+code = code + "if(" + value_signal_name + ".val==\'u\' || " + value_signal_name + ".val==\'w\' || " + value_signal_name + ".val==\'d\'){" + value_signal_name + ".data.push(" + value_signal_name + ".val); " + value_signal_name + ".val=\'=\'}\n"
+code = code + "if (" + value_signal_name + ".val==" + value_signal_name + ".pre && " + value_signal_name + ".wave!=\"\"" + ") {" + value_signal_name + ".wave=" + value_signal_name + ".wave + \".\"} else {" + value_signal_name + ".wave=" + value_signal_name + ".wave + " + value_signal_name + ".val}\n" 
+code = code + value_signal_name + ".pre=" + value_signal_name + ".val\n}"
 code = code + "}\n"
 code = code + "else {\n"
 code = code + "alert(\'you made a latch at signal \' + " + "\'" + value_signal_name + "\'"  + ")\n"
 code = code + "latch=true\n"
 code = code + "}\n"
-code = code + "return " + value_signal_name + "\n}\n"
+code = code + "return " + value_signal_name + ".val\n}\n"
 return code;
 };
 

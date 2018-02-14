@@ -30,16 +30,18 @@ Blockly.SYNTH['operator'] = function(block) {
   var value_in_a = Blockly.SYNTH.valueToCode(block, 'in_a', Blockly.SYNTH.ORDER_NONE);
   var dropdown_operator = block.getFieldValue('operator');
   var value_in_b = Blockly.SYNTH.valueToCode(block, 'in_b', Blockly.SYNTH.ORDER_NONE);
-//  operator=dropdown_operator;
-  switch (dropdown_operator) {
+  operator=dropdown_operator;
+/*  switch (dropdown_operator) {
 	  case "and": operator="nand"; break;
-	  case "nand": operator="and"; break
+	  case "nand": operator="and";
 	  case "or": operator="or"; break;
-	  case "nor": operator="or"; break
+	  case "nor": operator="or";
 	  case "xor": operator="xor"; break;
-	  case "xnor": operator="xnor"; break
+	  case "xnor": operator="xnor";
+	  case "srl": operator="srl"; break;
+	  case "sll": operator="sll"; break;
       default : operator="warning"; break;	  
-  }
+  }*/
   
   var code='';
   if (operator!="warning") {  
@@ -58,7 +60,8 @@ Blockly.SYNTH['operator'] = function(block) {
 		   code = code + 'f(temp, true)'
 	    }
     }
-    code = code + ")"
+//	code = code + " , " + value_in_a + " , " + value_in_b + " , " + 
+    code = code + " )"
   } else {
 	  alert("the operator " + dropdown_operator + " is not yet supported for the simulation tool"); return[];
   }

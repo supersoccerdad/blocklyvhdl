@@ -200,12 +200,12 @@ Blockly.Blocks['controls_select'] = {
 		for (var i = this.detection; i < this.itemCount_; i++) {
 			var input=this.getInput('ADD' + (i + 1));
 			var code = input.fieldRow["0"].text_;
-			alert(code);
+//			alert(code);
 			var input=this.getInput('ADD' + i);
-			input.removeField("B" + i)
-			input.removeField("C" + i);
-			input.appendField(new Blockly.FieldTextInput(code), "B" + i)
-			input.appendField("when", "C" + i);
+//			input.removeField("B" + i)
+//			input.removeField("C" + i);
+//			input.appendField(new Blockly.FieldTextInput(code), "B" + i)
+//			input.appendField("when", "C" + i);
 		}
     this.detection=0;
     }

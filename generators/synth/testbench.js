@@ -36,6 +36,7 @@ Blockly.SYNTH['testbench'] = function(block) {
   var text_testbench = block.getFieldValue('testbench');
   var statements_testbench = Blockly.SYNTH.statementToCode(block, 'testbench');
   var res= statements_testbench.split(";");
+  var reset=""
   for (var n=0; n<res.length; n++){
   	  res[n]=res[n].trim();
       res[n]=res[n].split(" ");
@@ -43,16 +44,24 @@ Blockly.SYNTH['testbench'] = function(block) {
 
   var code = statements_testbench + "\n";
   code = code + "\n";
-  code = code + "var wavesignal = \"{signal: [\"\n"
+//  code = code + "var wavesignal = \"{signal: [\"\n"
+
+  for (var n=0; n<res.length-1; n++){
+	  if ((res[n][1].indexOf("out")!=-1) || (res[n][1].indexOf("internal")!=-1)){
+	  } 
+	  else {
+		 reset=res[n][1].replace("inp_","")
+         code = code + reset + "= {val:false, pre:\'\', data:\'\', wave:\'\'};\n";
+      }
+  }
+
   code = code + "for (n=0; n<" + ((res[0][3].length)-2) + "; n++){\n"
   
   for (var n=0; n<res.length-1; n++){
 	  if ((res[n][1].indexOf("out")!=-1) || (res[n][1].indexOf("internal")!=-1)){
-//	  if (res[n][1].includes("out") || res[n][1].includes("internal")){
 	  } 
 	  else {
-         code = code + "if " + "(" + res[n][1] + "[n]" + "=='.') {" + res[n][1].slice(4) + "=" + res[n][1].slice(4) + "_pre} else {" + res[n][1].slice(4) + "=" + res[n][1] + "[n]};\n";
- //        code = code + res[n][1].slice(4) + "_pre = " + res[n][1].slice(4) + "\n";
+         code = code + "if " + "(" + res[n][1] + "[n]" + "=='.') {" + res[n][1].slice(4) + ".val=" + res[n][1].slice(4) + ".pre} else {" + res[n][1].slice(4) + ".val=" + res[n][1] + "[n]};\n";
       }
   }
   code = code + text_testbench + "()\n"; 
@@ -66,7 +75,7 @@ Blockly.SYNTH['testbench'] = function(block) {
       }
   }
   
-  code = code + "if (latch) {\n" 
+  code = code + "if (latch || error!=\'\') {\n" 
   code = code + "break}\n}\n"
   code = code + "</script>\n"
   code = code + "<script type=\"WaveDrom\">\n" 
@@ -74,16 +83,21 @@ Blockly.SYNTH['testbench'] = function(block) {
   for (var n=0; n<res.length-1; n++){
 	  if ((res[n][1].indexOf("out")!=-1) || (res[n][1].indexOf("int")!=-1)){
 //	  if (res[n][1].includes("out") || res[n][1].includes("int")){
-	     code = code + "{ name: \'" + res[n][1].substr(4) + "\' , wave: " +  res[n][1].substr(4) + "_wave" + ", data: " + res[n][1].substr(4) + "_data},\n";
+	     code = code + "{ name: \'" + res[n][1].substr(4) + "\' , wave: " +  res[n][1].substr(4) + ".wave" + ", data: " + res[n][1].substr(4) + ".data},\n";
 	} else {
 //         code = code + "{ name: "  + "'" + res[n][1].substr(4) + "'" + " , wave: " + res[n][3].replace("'","\'") + "},\n";
 //		 code = code + "{ name: "  + "'" + res[n][1].substr(4) + "'" + " , wave: " + res[n][1].replace("'","\'") + ", data: " + res[n][1].substr(4) + "_data},\n";
-	     code = code + "{ name: \'" + res[n][1].substr(4) + "\' , wave: " +  res[n][1].substr(4) + "_wave" + ", data: " + res[n][1].substr(4) + "_data},\n";
+	     code = code + "{ name: \'" + res[n][1].substr(4) + "\' , wave: " +  res[n][1].substr(4) + ".wave" + ", data: " + res[n][1].substr(4) + ".data},\n";
 
 		 }
   }
   code = code + "]}"
-  code= code + "\n</script>\n</body>\n</html>"
+  code= code + "\n</script>\n"
+  code= code + '<div id=\"log\"></div>\n'
+  code= code + '<script>\n'
+  code= code + 'document.getElementById(\"log\").innerHTML = window.error'
+//  code= code + '</script>\n'
+//  code= code + "</body>\n</html>"
   return code;
 };
 
