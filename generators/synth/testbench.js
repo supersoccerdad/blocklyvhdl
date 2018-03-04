@@ -75,7 +75,7 @@ Blockly.SYNTH['testbench'] = function(block) {
       }
   }
   
-  code = code + "if (latch || error!=\'\') {\n" 
+  code = code + "if (latch || error" + text_testbench + "!=\'\') {\n" 
   code = code + "break}\n"
   
   for (var n=0; n<res.length-1; n++){
@@ -83,7 +83,7 @@ Blockly.SYNTH['testbench'] = function(block) {
 	  } else {
 		  alert(res[n][1].indexOf("out") + " " + res[n][1])
 //if (out_D.substring(0,n+1)!=D.wave && out_D.length>0){error='output D is not equal as expected';break}		  
-  code = code + "if (" + res[n][1] + ".substring(0,n+1)!=" + res[n][1].slice(4) + ".wave && " + res[n][1] + ".length>0){error= \'output " + res[n][1].slice(4) + " is not equal as expected at cycle\' + n + 1; break\n}"
+  code = code + "if (" + res[n][1] + ".substring(0,n+1)!=" + res[n][1].slice(4) + ".wave && " + res[n][1] + ".length>0){error" + text_testbench + "= \'output " + res[n][1].slice(4) + " is not equal as expected at cycle \' + (n + 1); break\n}"
 	  }
   }	  
   code = code + "}\n</script>\n"
@@ -102,9 +102,9 @@ Blockly.SYNTH['testbench'] = function(block) {
   }
   code = code + "]}"
   code= code + "\n</script>\n"
-  code= code + '<div id=\"log\"></div>\n'
+  code= code + '<div id=\"log' + text_testbench + '\"></div>\n'
   code= code + '<script>\n'
-  code= code + 'document.getElementById(\"log\").innerHTML = window.error'
+  code= code + 'document.getElementById(\"log' + text_testbench + '\").innerHTML = window.error' + text_testbench
 //  code= code + '</script>\n'
 //  code= code + "</body>\n</html>"
   return code;

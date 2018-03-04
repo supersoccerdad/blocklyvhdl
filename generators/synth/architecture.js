@@ -91,7 +91,7 @@ for(var n=0; n<strcode.length-1; n++){
   }
 }
 
-statements_declarations  = statements_declarations  + 'var error=\"\"\n'
+statements_declarations  = statements_declarations  + 'var error' + text_entity_name + '=\"\"\n'
 
 code = statements_declarations + "\nfunction " + text_entity_name + "(){\n" + code;
 var lines = code.split(/\r\n|\r|\n/);  
@@ -165,7 +165,7 @@ if(code.search(funcname + ".type=\'std_logic\';")==-1 && rescntr>1){
            resolutioncode=resolutioncode + "}\n"
            resolutioncode=resolutioncode + "return " + funcname + "r\n"
    		   resolutioncode=resolutioncode + "}\n"
-		   resolutioncode=resolutioncode + "error=error + \'<br>Error: one or more sources are driving signal c which is not from a resolved type (std_logic)\'\n" 	   
+		   resolutioncode=resolutioncode + "error" + text_entity_name + "=error" + text_entity_name + "+\'<br>Error: one or more sources are driving signal c which is not from a resolved type (std_logic)\'\n" 	   
 		   resolutioncode=resolutioncode + "}\n"
 		   }
 }
