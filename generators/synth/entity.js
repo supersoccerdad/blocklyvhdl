@@ -59,7 +59,7 @@ Blockly.SYNTH['port_pin_name'] = function(block) {
 //	code = code + 'var ' + value_pin_name + "_wave=\'\'" + ';\n';
 //	code = code + 'var ' + value_pin_name + "_type=\'" + value_pin_type + "\'" + ';\n';
 
-code = code + 'var ' + value_pin_name + '= {val:false, pre:\"\", data:\"\", wave:\"\", type:\"\"};\n'
+code = code + 'var ' + value_pin_name + '= {val:false, pre:\"\", data:\"\", wave:\"\", type:\"\", name:\"' + value_pin_name + '\"};\n'
 code = code + value_pin_name + '.type=\"' + value_pin_type + '\";\n' 
 	
     code = code + 'function ' + value_pin_name + 'f(latchstr, bypass) {\n'
@@ -70,7 +70,7 @@ code = code + value_pin_name + '.type=\"' + value_pin_type + '\";\n'
     code = code + 'if (' + value_pin_name + '.val==' + value_pin_name + '.pre && ' + value_pin_name + '.wave!=\"\") {' + value_pin_name + '.wave=' + value_pin_name + '.wave + \".\"} else {' + value_pin_name + '.wave=' + value_pin_name + '.wave + ' + value_pin_name + '.val}\n'
     code = code + value_pin_name + ".pre=" + value_pin_name + ".val\n"
 	code = code + '}\n'
-	code = code + 'return ' + value_pin_name + '.val\n'
+	code = code + 'return ' + value_pin_name + '\n'
 	code = code + '}\n'
 
   } else {

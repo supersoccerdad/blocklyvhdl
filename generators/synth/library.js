@@ -30,13 +30,15 @@ Blockly.SYNTH['library'] = function(block) {
 //  var code = "<!DOCTYPE html>\n<html>\n<body>\n"
 //  code = code + "<body onload=\"WaveDrom.ProcessAll()\">\n" 
 //  code = code + statements_declarations
-  var code = statements_declarations
+  var code = '<script>var library=[];</script>\n'
+  var code = code + statements_declarations
   return code;
 };
 
 Blockly.SYNTH['ieee'] = function(block) {
   var dropdown_ieee = block.getFieldValue('IEEE');
   var code = '<script src=\"' + "http://www.blocklyvhdl.com/demo/library/" + dropdown_ieee + '.js\" type=\"text/javascript\"></script>\n'
+  code= code + '<script>library.push("' + dropdown_ieee + '")</script>\n'
   return code;
 };
 

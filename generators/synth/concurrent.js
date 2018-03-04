@@ -34,11 +34,7 @@ Blockly.SYNTH['process'] = function(block) {
   } else {
      var sens = "\n";
 	 }
-//  var code = text_label_begin + ': ' + 'process' + sens + statements_declarations + 'begin' + '\n';
-//  var code = code + statements_begin + 'end process ' + text_label_end + ';\n';
-
   var code = "if ("
-//  alert("sens=" + sens)
   sens=sens.slice(1, sens.length-2)
   sens= sens.split(",")
   for (var n=0; n<sens.length; n++){
@@ -55,15 +51,7 @@ Blockly.SYNTH['process'] = function(block) {
   
   code =code + "} else {\n"
   var test=statements_begin.split("\n")  
-/*  for(n=0;n<test.length;n++){
-	  if(test[n].search("function")!=-1){
-         code = code + test[n] + "\n"
-		 code = code + "return" + "\'hold\'\n"
-         code = code + "}"
-	  }
-  }*/
   code = code + "}" 
-//  var code = statements_begin
   return code;
 };
 

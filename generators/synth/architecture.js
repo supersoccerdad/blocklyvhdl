@@ -103,7 +103,7 @@ for (var n=0; n<lines.length; n++){
 
 	line = lines[n].trim().split(" ")
 	if (line[0]=="function" && line[1] && (line[1].indexOf("latchstr")!=-1)){funcarray.push(line[1])}
-	if (line[0]=="Process" && line[2]=="function" && line[2] ){funcarray.push(line[3]);label.push(line[0]); alert(funcarray[0])}	
+	if (line[0]=="Process" && line[2]=="function" && line[2] ){funcarray.push(line[3]);label.push(line[0]);}	
 }
 
 
@@ -115,44 +115,42 @@ var deletename=""
 for (var n=0; n<funcarray.length; n++){
 	var rescntr=1
 	for (var m=n+1; m<funcarray.length; m++){
-		alert("n="+n + " " + "m=" + m)
 		if(funcarray[n]==funcarray[m]){
-			
+			funcname=funcarray[n].split("f(")[0]
 			if (rescntr==1){
+//				alert("function " + funcarray[m])
 			code=code.replace("function " + funcarray[m], "function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr,")
+			var res = code.split("function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr, bypass){");
+			code= res[0] + "function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr, bypass){\n" + "var " + funcname + "_" + rescntr + " = " + "{val:false, pre:\'\', data:\'\', wave:\'\', type:" + funcname + ".type" + ", name:\'" + funcname + "_" + rescntr + "\'};" + res[1]
+			code=code.replace("return " + funcname + ".val", "return " + funcname + "_" + rescntr)
+            code=code.replace(funcname + ".val=", funcname + "_" + rescntr + ".val=")
+//			alert(res[0])
+//			alert(res[1])
 			code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
 			rescntr=rescntr+1
 			}
 			code=code.replace("function " + funcarray[m], "function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr,")
-			code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
+			var res = code.split("function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr, bypass){");
+			code= res[0] + "function "+ funcarray[m].split("(")[0] + "_" + rescntr + "(latchstr, bypass){\n" + "var " + funcname + "_" + rescntr + " = " + "{val:false, pre:\'\', data:\'\', wave:\'\', type:" + funcname + ".type" + ", name:\'" + funcname + "_" + rescntr + "\'};" + res[1]
+			code=code.replace("return " + funcname + ".val", "return " + funcname + "_" + rescntr)
+			res = code.split("var " + funcname + "_" + rescntr)
+			var c2_1
+            res[1]=res[1].replace(funcname + ".val=", funcname + "_" + rescntr + ".val=")
+			code=res[0] + "var " + funcname + "_" + rescntr + res[1]
 			
-			alert("funcarray[m]=" + funcarray[m])
+//			alert(res[0])
+//			alert(res[1])
+			code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
 			if (code.indexOf("function " + funcarray[m])!=-1){
-//				alert("test6=" + code.indexOf("function " + funcarray[m]))
 			rescntr=rescntr+1}
-			alert("resntr=" + rescntr)
-//		    doublefound=true
-//			alert("double=true " + funcarray[n] + " " + n + " " + funcarray[m] + " "+ m)}
 		}
-//		if (doublefound==true){
 	       funcname=funcarray[n].split("f(")[0]
-//        }
-//}
-//	       code=code.replace("function " + funcarray[n], "function "+ funcarray[n].split("(")[0] + "_" + rescntr + "(latchstr,")
-//		   code=code.replace(funcarray[n].split("(")[0] + '(\"\", false)', "")
-alert("resolutioncode.searchfuncarray[n]=" + resolutioncode)
-//funcarray[n]=funcarray[n].replace(",","")
-var test5=funcarray[n]
-//           if(resolutioncode=="" || resolutioncode.search(test)==-1){
-//			              if(resolutioncode=="" || resolutioncode.search("resolution")==-1){
-						  if(resolutioncode=="" || resolutioncode.search("function " + funcname)==-1){
-			   alert("test2222=" + test)
-//			   var testc=funcname+"_type"
-//alert(code)
-//alert("testtest"+ code.search("c_type=\'std_logic\';"))
-if(code.search(funcname + ".type=\'std_logic\';")==-1 && rescntr>1){
-	alert("func_name" + funcname + ".type=\'std_logic\';")
 
+var test5=funcarray[n]
+
+						  if(resolutioncode=="" || resolutioncode.search("function " + funcname)==-1){
+
+if(code.search(funcname + ".type=\'std_logic\';")==-1 && rescntr>1){
 		   resolutioncode=resolutioncode + funcname + "f(\'\', false)\n"
 		   resolutioncode=resolutioncode + "var " + funcname + "r=\'\';\n";
            resolutioncode=resolutioncode + "function " + funcarray[n] + " bypass){\n"
@@ -167,16 +165,11 @@ if(code.search(funcname + ".type=\'std_logic\';")==-1 && rescntr>1){
            resolutioncode=resolutioncode + "}\n"
            resolutioncode=resolutioncode + "return " + funcname + "r\n"
    		   resolutioncode=resolutioncode + "}\n"
-		   resolutioncode=resolutioncode + "error=error + \'<br>Error: one or more sources are driving signal c which is not from a resolved type (std_logic)\'\n" 
- //  	   resolutioncode=resolutioncode + "alert(\'signal " + funcname + " is not from a resolved type (std_logic)\')\n"		   
+		   resolutioncode=resolutioncode + "error=error + \'<br>Error: one or more sources are driving signal c which is not from a resolved type (std_logic)\'\n" 	   
 		   resolutioncode=resolutioncode + "}\n"
 		   }
 }
 }
-//           doublefound=false	   
-//        }
-//	}
-//	           doublefound=false
 }
 // Count the total of same functions in a process and put them in the else block
 var func_num=0
@@ -187,10 +180,8 @@ var lines = code.split(/\r\n|\r|\n/);
 for (var n=0; n<lines.length; n++){
   line = lines[n].trim().split(" ")
   if (line[0]=="Process" && line[2]=="function" ){
-	  alert("line[3]=" + line[3])
   if(line[3].indexOf("_")!=-1 ){
-	    func_num=func_num+1
-//  process_else=process_else + "function " + funcname + "f_"+ func_num + "(latchstr, bypass){return\'hold\'}\n"
+	func_num=func_num+1
     process_else=process_else + "function " + line[3] + " bypass){return\'hold\'}\n"
   } else {
 	  	    func_num=func_num+1
@@ -198,21 +189,13 @@ for (var n=0; n<lines.length; n++){
   }
  }	 
 if (line[0]=="Process}" && line[2]!="{function"){
-	alert(line)
     code=code.replace("  Process} else {", "  Process_} else {" + process_else)
 	  end_num=func_num
 	  process_else=""
   } 
   previous_line=line[0]
 }
-	alert("func_num rescntr=" + func_num + " " + rescntr)
-//because the decleration has one }
-//if(func_num==0 && rescntr==1){ funcarray!=-1
-//if(end_num>0 && rescntr==0){
-	alert("lastline = "+ lines[lines.length-2])
-//if(end_num>0 && funcarray.length==end_num){
 if(end_num>0 && lines[lines.length-2].indexOf("Process")!=-1){
-	alert("end_num funcarray[]=" + end_num + " " + funcarray)
 code=code+"}\n"
 }
 

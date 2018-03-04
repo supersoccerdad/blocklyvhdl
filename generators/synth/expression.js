@@ -50,20 +50,16 @@ Blockly.SYNTH['operator'] = function(block) {
 //    if (!value_in_a.endsWith(")")) {
     	code = code + 'f' + '(temp, true) ' + "," + ' ' + value_in_b
 	    if (value_in_b.lastIndexOf(")")==-1) {
-//		if (!value_in_b.endsWith(")")) {
 		   code = code + 'f(temp, true)'
 	    }
     } else {
 	    code = code + ' ' + "," + ' ' + value_in_b
 	  	if (value_in_b.lastIndexOf(")")==-1) {
-//		if (!value_in_b.endsWith(")")) {
 		   code = code + 'f(temp, true)'
 	    }
     }
-//	code = code + " , " + value_in_a + " , " + value_in_b + " , " + 
     code = code + " )"
   } else {
-	  alert("the operator " + dropdown_operator + " is not yet supported for the simulation tool"); return[];
   }
   return [code, Blockly.SYNTH.ORDER_NONE];
 };
@@ -77,15 +73,10 @@ Blockly.SYNTH['qualified'] = function(block) {
 
 Blockly.SYNTH['not'] = function(block) {
   var value_not_value = Blockly.SYNTH.valueToCode(block, 'not_value', Blockly.SYNTH.ORDER_NONE);
-//  var code = 'not '+ value_not_value;
-//    var code = '!' + value_not_value;
 	var code = 'not('  + value_not_value
     if (value_not_value.lastIndexOf(")")==-1) {
-//    if (!value_not_value.endsWith(")")) {
     	code = code + 'f' + '(temp, true) ' + "," + ' ' + "0)"
-//		alert(code)
     } else { code = code + ", 0)"}
-//			alert(code)
   return [code, Blockly.SYNTH.ORDER_NONE];
 };
 

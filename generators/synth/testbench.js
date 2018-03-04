@@ -36,7 +36,7 @@ Blockly.SYNTH['testbench'] = function(block) {
   var text_testbench = block.getFieldValue('testbench');
   var statements_testbench = Blockly.SYNTH.statementToCode(block, 'testbench');
   var res= statements_testbench.split(";");
-  var reset=""
+  var reset_signal=""
   for (var n=0; n<res.length; n++){
   	  res[n]=res[n].trim();
       res[n]=res[n].split(" ");
@@ -50,8 +50,8 @@ Blockly.SYNTH['testbench'] = function(block) {
 	  if ((res[n][1].indexOf("out")!=-1) || (res[n][1].indexOf("internal")!=-1)){
 	  } 
 	  else {
-		 reset=res[n][1].replace("inp_","")
-         code = code + reset + "= {val:false, pre:\'\', data:\'\', wave:\'\'};\n";
+		 reset_signal=res[n][1].replace("inp_","")
+         code = code + reset_signal + ".val=false;" + reset_signal + ".pre=\'\';" + reset_signal + ".data=\'\';" + reset_signal + ".wave=\'\';\n";
       }
   }
 
@@ -76,8 +76,17 @@ Blockly.SYNTH['testbench'] = function(block) {
   }
   
   code = code + "if (latch || error!=\'\') {\n" 
-  code = code + "break}\n}\n"
-  code = code + "</script>\n"
+  code = code + "break}\n"
+  
+  for (var n=0; n<res.length-1; n++){
+	  if (res[n][1].indexOf("out")==-1){
+	  } else {
+		  alert(res[n][1].indexOf("out") + " " + res[n][1])
+//if (out_D.substring(0,n+1)!=D.wave && out_D.length>0){error='output D is not equal as expected';break}		  
+  code = code + "if (" + res[n][1] + ".substring(0,n+1)!=" + res[n][1].slice(4) + ".wave && " + res[n][1] + ".length>0){error= \'output " + res[n][1].slice(4) + " is not equal as expected at cycle\' + n + 1; break\n}"
+	  }
+  }	  
+  code = code + "}\n</script>\n"
   code = code + "<script type=\"WaveDrom\">\n" 
   code = code + "{ signal : [\n"
   for (var n=0; n<res.length-1; n++){
@@ -125,13 +134,17 @@ Blockly.SYNTH['tb_signal'] = function(block) {
 
 Blockly.SYNTH['testbench_out'] = function(block) {
   var text_output = block.getFieldValue('output');
-  var code = 'var ' + "out_" + text_output + " = \'\';\n";
+      var text_trace = block.getFieldValue('trace');
+	  alert(text_trace)
+	    text_trace=text_trace.replace(/ /g,"u")
+  var code = 'var ' + "out_" + text_output + " = \'" + text_trace + "\';\n";
   return code;
 };
 
 Blockly.SYNTH['tb_out'] = function(block) {
   var text_output = block.getFieldValue('output');
-  var code = 'var ' + "out_" + text_output + " = \'\';\n";
+    var text_trace = block.getFieldValue('trace');
+  var code = 'var ' + "out_" + text_output + " = \'" + text_trace + "\';\n";
   return code;
 };
 

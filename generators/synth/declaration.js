@@ -101,12 +101,10 @@ Blockly.SYNTH['association'] = function(block) {
   var res5=""
 
 if (value_variable.indexOf("temp")==-1){
-//if (!value_variable.includes("temp")){
 var array_vhdlport =["nand","and","nor","or","xnor","xor","srl","sll"]
 var array_javaport =[" && "," && "," || "," || "," != "," != "," << "," >> "]
 for (var n=0; n<array_vhdlport.length; n++){
     if (value_variable.indexOf(array_vhdlport[n])!=-1){
-//  if (value_variable.includes(array_vhdlport[n])){
         if (value_variable.match(/\(/g)) {
             if (value_variable.match(/\)/g)) {
                 if (value_variable.match(/\(/g).length!=value_variable.match(/\)/g).length){
@@ -209,10 +207,7 @@ res = res.split(" ");
 var temptype=[]
 for( var m=0; m<res.length; m=m+2){
 	if (res5.indexOf(res[m])==-1){
-//    if (!res5.includes(res[m])){
         if (res.indexOf("f(temp, true)")==-1 && res.indexOf("0")==-1){
-//	    if (!res.includes("f(temp, true)") && !res.includes("0")){
-//	alert("res[" + m + "]=" + res[m])
             res5=res5 + res[m] + "f(temp, true)\n"
 			temptype=temptype+res[m] + ".type,"	
         }
@@ -224,7 +219,6 @@ temptype= "[" + temptype + value_signal_name + ".type]\n"
 value_variable=value_variable.replace(" ,", ",")
 value_variable=value_variable + ";"
 value_variable = value_variable.replace(");", ",temptype);")
-alert("value_variable= " + value_variable)
 
 code = code + "var temptype=" + temptype
 code = code + res5		

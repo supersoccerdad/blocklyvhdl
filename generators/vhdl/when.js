@@ -44,14 +44,15 @@ Blockly.VHDL['controls_when'] = function(block) {
     var text_B = block.getFieldValue('B' + n);
     argument = Blockly.VHDL.valueToCode(block, 'ADD' + n,
     Blockly.VHDL.ORDER_NONE) || 'false';
-
-    code += ' else \n' + space.repeat(spacer)  + text_B + ' when ' + argument + ';'
-  if (n==block.elseifCount_) {
+  
+    code += ' else \n' + space.repeat(spacer)  + text_B + ' when ' + argument
+  }
+//  if (n==block.elseifCount_-1) {
     argument = Blockly.VHDL.valueToCode(block, 'ELSE' + n,
     Blockly.VHDL.ORDER_NONE) || 'false';
-    code += ' else \n' + argument;        
-	}
-  }
+    code += ";";        
+//	}
+  
   return code + '\n';
 };
 

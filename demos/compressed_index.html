@@ -76,13 +76,11 @@ function fromXml() {
 }
 
 function toCode(lang) {
-alert("test")
   var output = document.getElementById('importExport');
 //    	alert(output.value)
 //  output.value = Blockly[lang].workspaceToCode(workspace);
 //  	alert(output.value)
     output.value = Blockly.VHDL.workspaceToCode(workspace);
-	alert(output.value)
   taChange();
 }
 
