@@ -30,6 +30,9 @@ Blockly.VHDL['entity'] = function(block) {
   var text_end_entity = block.getFieldValue('end_entity');
   var code = 'entity ' + text_entity + ' is' + '\n';
   var code = code + statements_generic_port;
+  if (code.charAt(code.length-2)==";"){
+	  code=code.slice(0,code.length-7) +');\n';
+  }
   var code = code + 'end ' + text_end_entity + ';\n';
   return code;
 };
